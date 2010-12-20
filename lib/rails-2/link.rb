@@ -25,7 +25,7 @@ module ActionView::Helpers::UrlHelper
       href_attr = "href=\"#{url}\"" unless href
 
       if button_options
-        image = tag :img, { :alt => name, :src => MagicDoor::Helpers::generate_and_get_path!(name, button_options)}
+        image = tag :img, { :alt => name, :src => MagicDoorHelper.new(name, button_options).generate_and_get_path! }
         "<a #{href_attr}#{tag_options}>#{image}</a>"
       else
         "<a #{href_attr}#{tag_options}>#{name || url}</a>".html_safe
