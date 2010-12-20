@@ -1,0 +1,49 @@
+== Rails helpers for the MagicDoor generator gem
+
+Provides form and link helpers. Supports rails 2.3.6+ and rails 3.
+
+
+== Quick start
+
+Install the {magic_door}[https://rubygems.org/gems/magic_door] gem and include it in your Gemfile or environment.rb file.
+
+Set the magic door defaults (you'll probably do so in the envirnoment.rb file):
+
+  MagicDoor.defaults.merge!({
+    :public_path      => File.join('buttons', 'cache'),
+    :source_path      => File.join(RAILS_ROOT, 'public', 'images', 'buttons'),
+    :destination_path => File.join(RAILS_ROOT, 'public', 'images', 'buttons', 'cache'),
+    :split_at         => 11,
+    :css              => "padding: 10;
+                          font-weight: bold;
+                          font-size: 14;
+                          color: #fff; text-align: center;
+                          text-shadow: #42180a 0 1;
+                          font: #{File.join(RAILS_ROOT, 'data', 'fonts', 'MyriadPro-Semibold.otf')}"
+  })
+
+In the example above, as you may have noticed the :public_path option doesn't include the "images" directory because the custom helpers are using the _image_path_ method.
+
+  options = {
+    :css => 'left: -5; padding: 22',
+    :image => 'button.png'
+  }
+
+To use the previous options hash on a link, add it as the last (4th) param.
+
+  link_to "hello-world", root_path, {}, {}
+
+The other helper available is the form_for submit tag. It's implemented by a custom builder.
+
+  <%= form_for(@article, {:builder => CustomFormBuilder}) do |f| %>
+    <%= f.submit %>
+  <% end %>
+
+If you need to use it across the entire app you may want to set it as a default in your environment.rb file:
+
+  ActionView::Base.default_form_builder = CustomFormBuilder
+
+
+== License
+
+Author and copyright (c) 2010 Daniel Mircea <daniel@viseztrance.com>, released under the MIT license
